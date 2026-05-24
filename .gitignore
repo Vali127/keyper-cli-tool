@@ -1,0 +1,12 @@
+# Vault
+data/.vault.json
+
+# Dependencies
+node_modules/
+
+# Env
+.env
+
+# OS
+.DS_Store
+Thumbs.db
