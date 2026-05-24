@@ -21,7 +21,7 @@ program.addCommand(deleteCommand);
 program.addCommand(generateCommand);
 
 console.log(pc.magenta(figlet.textSync('Keyper', { font: 'Standard' })));
-console.log("")
+console.log(pc.gray("A lightweight and secure CLI password manager built with Node.js.\n"))
 //Menu if there are no given arguments
 if (process.argv.length === 2) {
     try {
