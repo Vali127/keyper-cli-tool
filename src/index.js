@@ -1,13 +1,12 @@
 #!/usr/bin/env node
-
 import { program } from 'commander';
 import pc from 'picocolors';
-import prompts from 'prompts';
 import { addCommand } from './commands/add.js';
 import { listCommand } from './commands/list.js';
 import { getCommand } from './commands/get.js';
 import { deleteCommand } from './commands/delete.js';
 import { generateCommand } from './commands/generate.js';
+import select from '@inquirer/select';
 
 program
     .name('keyper')
@@ -20,22 +19,29 @@ program.addCommand(getCommand);
 program.addCommand(deleteCommand);
 program.addCommand(generateCommand);
 
-// Menu interactif si aucune commande
+//Menu if there are no given arguments
 if (process.argv.length === 2) {
-    const { action } = await prompts({
-        type: 'select',
-        name: 'action',
-        message: pc.cyan('What do you want to do?'),
-        choices: [
-            { title: '➕  Add a password',      value: 'add' },
-            { title: '📋  List passwords',       value: 'list' },
-            { title: '🔑  Get a password',       value: 'get' },
-            { title: '⚡  Generate a password',  value: 'generate' },
-            { title: '🗑️   Delete a password',   value: 'delete' },
-        ],
-    });
-
-    process.argv.push(action);
+    try {
+        const action = await select({
+            message: pc.cyan('What do you want to do?'),
+            choices: [
+                { name: 'Add a password',      value: 'add' },
+                { name: 'List passwords',      value: 'list' },
+                { name: 'Get a password',      value: 'get' },
+                { name: 'Generate a password', value: 'generate' },
+                { name: 'Delete a password',   value: 'delete' },
+            ],
+            theme: {
+                style: {
+                    highlight: (text) => pc.bold(pc.cyan(text)),
+                },
+            },
+        });
+        process.argv.push(action);
+    } catch (e) {
+        console.log(pc.yellow('\n Bye!'));
+        process.exit(0);
+    }
 }
 
 program.parse(process.argv);
