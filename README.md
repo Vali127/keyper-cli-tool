@@ -43,7 +43,7 @@ keyper generate   # generate a random password
 
 ## Tech Stack
 
-Node.js, Commander, Prompts, Lowdb, Clipboardy, Picocolors, crypto (native)
+Node.js, Commander, inquirer, Lowdb, Clipboardy, Picocolors, crypto (native)
 
 ## License
 
