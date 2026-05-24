@@ -2,7 +2,8 @@ import { Command } from 'commander';
 import pc from 'picocolors';
 import crypto from 'crypto';
 import clipboard from 'clipboardy';
-import prompts from 'prompts';
+import number from '@inquirer/number';
+import checkbox from '@inquirer/checkbox';
 
 const CHARSETS = {
     lowercase: 'abcdefghijklmnopqrstuvwxyz',
@@ -20,34 +21,34 @@ function generatePassword(length, charset) {
 export const generateCommand = new Command('generate')
     .description('Generate a secure random password')
     .action(async () => {
-        const { length, types } = await prompts([
-            {
-                type: 'number',
-                name: 'length',
+        try {
+            const length = await number({
                 message: pc.cyan('Password length:'),
-                initial: 16,
+                default: 16,
                 validate: (v) => v >= 8 || 'Minimum 8 characters',
-            },
-            {
-                type: 'multiselect',
-                name: 'types',
+            });
+
+            const types = await checkbox({
                 message: pc.cyan('Character types:'),
                 choices: [
-                    { title: 'Lowercase', value: 'lowercase', selected: true },
-                    { title: 'Uppercase', value: 'uppercase', selected: true },
-                    { title: 'Numbers',   value: 'numbers',   selected: true },
-                    { title: 'Symbols',   value: 'symbols',   selected: false },
+                    { name: 'Lowercase', value: 'lowercase', checked: true },
+                    { name: 'Uppercase', value: 'uppercase', checked: true },
+                    { name: 'Numbers',   value: 'numbers',   checked: true },
+                    { name: 'Symbols',   value: 'symbols',   checked: false },
                 ],
-                min: 1,
-            },
-        ]);
+                validate: (v) => v.length > 0 || 'Select at least one',
+            });
 
-        const charset = types.map((t) => CHARSETS[t]).join('');
-        const password = generatePassword(length, charset);
+            const charset = types.map((t) => CHARSETS[t]).join('');
+            const password = generatePassword(length, charset);
 
-        console.log(pc.cyan('\n Generated password:'));
-        console.log(pc.bold(pc.white(`  ${password}\n`)));
+            console.log(pc.cyan('\n Generated password:'));
+            console.log(pc.bold(pc.white(`  ${password}\n`)));
 
-        await clipboard.write(password);
-        console.log(pc.green('✔ Copied to clipboard!'));
+            await clipboard.write(password);
+            console.log(pc.green('✔ Copied to clipboard!'));
+        } catch (e) {
+            console.log(pc.yellow('\n Operation cancelled.'));
+            process.exit(0);
+        }
     });

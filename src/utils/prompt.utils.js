@@ -1,8 +1,10 @@
-import prompts from 'prompts';
 import pc from 'picocolors';
-import {checkOrInitMasterPassword} from "../services/storage.service.js";
+import input from '@inquirer/input';
+import password from '@inquirer/password';
+import confirm from '@inquirer/confirm';
+import { checkOrInitMasterPassword } from '../services/storage.service.js';
 
-function onCancel() {
+function handleCancel() {
     console.log(pc.yellow('\n Operation cancelled.'));
     process.exit(0);
 }
@@ -14,71 +16,45 @@ export async function resolveMasterPassword() {
 }
 
 export async function askMasterPassword() {
-    const { masterPassword } = await prompts(
-        {
-            type: 'password',
-            name: 'masterPassword',
+    try {
+        return await password({
             message: pc.cyan('Master password:'),
             validate: (v) => v.length >= 6 || 'Minimum 6 characters',
-        },
-        { onCancel }
-    );
-    return masterPassword;
+        });
+    } catch (e) { handleCancel(); }
 }
 
 export async function askEntryDetails() {
-    return prompts(
-        [
-            {
-                type: 'text',
-                name: 'group',
-                message: pc.cyan('Group (ex: github):'),
-                validate: (v) => v.length > 0 || 'Required',
-            },
-            {
-                type: 'text',
-                name: 'username',
-                message: pc.cyan('Username:'),
-                validate: (v) => v.length > 0 || 'Required',
-            },
-            {
-                type: 'password',
-                name: 'password',
-                message: pc.cyan('Password:'),
-                validate: (v) => v.length > 0 || 'Required',
-            },
-        ],
-        { onCancel }
-    );
+    try {
+        const group = await input({
+            message: pc.cyan('Group (ex: github):'),
+            validate: (v) => v.length > 0 || 'Required',
+        });
+        const username = await input({
+            message: pc.cyan('Username:'),
+            validate: (v) => v.length > 0 || 'Required',
+        });
+        const pass = await password({
+            message: pc.cyan('Password:'),
+            validate: (v) => v.length > 0 || 'Required',
+        });
+        return { group, username, password: pass };
+    } catch (e) { handleCancel(); }
 }
 
 export async function askConfirm(message) {
-    const { confirmed } = await prompts(
-        {
-            type: 'confirm',
-            name: 'confirmed',
+    try {
+        return await confirm({
             message: pc.yellow(message),
-            initial: false,
-        },
-        { onCancel }
-    );
-    return confirmed;
+            default: false,
+        });
+    } catch (e) { handleCancel(); }
 }
 
 export async function askSearch() {
-    return prompts(
-        [
-            {
-                type: 'text',
-                name: 'group',
-                message: pc.cyan('Group (leave empty to skip):'),
-            },
-            {
-                type: 'text',
-                name: 'username',
-                message: pc.cyan('Username (leave empty to skip):'),
-            },
-        ],
-        { onCancel }
-    );
+    try {
+        const group = await input({ message: pc.cyan('Group (leave empty to skip):') });
+        const username = await input({ message: pc.cyan('Username (leave empty to skip):') });
+        return { group, username };
+    } catch (e) { handleCancel(); }
 }

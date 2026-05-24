@@ -7,6 +7,7 @@ import { getCommand } from './commands/get.js';
 import { deleteCommand } from './commands/delete.js';
 import { generateCommand } from './commands/generate.js';
 import select from '@inquirer/select';
+import figlet from "figlet";
 
 program
     .name('keyper')
@@ -19,11 +20,13 @@ program.addCommand(getCommand);
 program.addCommand(deleteCommand);
 program.addCommand(generateCommand);
 
+console.log(pc.magenta(figlet.textSync('Keyper', { font: 'Standard' })));
+console.log("")
 //Menu if there are no given arguments
 if (process.argv.length === 2) {
     try {
         const action = await select({
-            message: pc.cyan('What do you want to do?'),
+            message: pc.magenta('What do you want to do?'),
             choices: [
                 { name: 'Add a password',      value: 'add' },
                 { name: 'List passwords',      value: 'list' },
