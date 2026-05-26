@@ -1,4 +1,4 @@
-<h1 align="center"> <img width="45" height="45" alt="logo" src="https://github.com/Vali127/keyper-cli-tool/blob/main/src/assets/images/keyper.png" /><br />Motion</h1>
+<h1 align="center"> <img width="45" height="45" alt="logo" src="https://github.com/Vali127/keyper-cli-tool/blob/main/src/assets/images/keyper.png" /><br />Keyper</h1>
 <h3 align="center">
   An open-source lightweight and secure CLI password manager built with Node.js.
 </h3>
