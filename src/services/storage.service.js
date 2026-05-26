@@ -1,13 +1,18 @@
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+// src/services/storage.service.js
+
+import { join } from 'path';
+import { homedir } from 'os';
+import { mkdirSync } from 'fs';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 import pc from 'picocolors';
 import { encrypt, decrypt } from './crypto.service.js';
 import { createVerifier, verifyMasterPassword } from '../utils/validator.utils.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const VAULT_PATH = join(__dirname, '../../data/.vault.json');
+const VAULT_DIR = join(homedir(), '.keyper');
+const VAULT_PATH = join(VAULT_DIR, 'vault.json');
+
+mkdirSync(VAULT_DIR, { recursive: true });
 
 const adapter = new JSONFile(VAULT_PATH);
 const db = new Low(adapter, { verifier: null, entries: [] });
@@ -23,7 +28,6 @@ export async function saveVault() {
 export async function checkOrInitMasterPassword(masterPassword) {
     await loadVault();
 
-    // first usage...
     if (!db.data.verifier) {
         db.data.verifier = createVerifier(masterPassword);
         await saveVault();
@@ -31,7 +35,6 @@ export async function checkOrInitMasterPassword(masterPassword) {
         return true;
     }
 
-    // verifying...
     const valid = verifyMasterPassword(masterPassword, db.data.verifier);
     if (!valid) {
         console.log(pc.red('\n✖ Wrong master password.\n'));
