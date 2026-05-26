@@ -1,7 +1,7 @@
 {
   "name": "keyper",
   "version": "1.0.0",
-  "description": "A secure CLI password manager",
+  "description": "Secure CLI password manager",
   "type": "module",
   "main": "src/index.js",
   "bin": {
