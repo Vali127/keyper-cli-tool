@@ -1,5 +1,5 @@
 {
-  "name": "keyper",
+  "name": "@mh-valimbavaka/keyper",
   "version": "1.0.0",
   "description": "Secure CLI password manager",
   "type": "module",

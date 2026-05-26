@@ -9,6 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 figlet.parseFont('ANSI Regular', readFileSync(join(__dirname, '../assets/ANSI Regular.flf'), 'utf8'));
 
 export function showBanner() {
+    console.log(pc.gray("Starting...\n"))
     console.log(pc.white(figlet.textSync('Keyper', { font: 'ANSI Regular' })));
     console.log(pc.gray('A lightweight and secure CLI password manager built with Node.js.\n'));
 }

@@ -1,4 +1,13 @@
-# Keyper
+<p align="center">
+  <img src="src/assets/images/keyper.png" alt="keyper" />
+</p>
+<h3 align="center">Keyper</h3>
+
+<p align="center">
+  <img src="https://img.shields.io/npm/v/@mh-valimbavaka/keyper" />
+  <img src="https://img.shields.io/npm/dm/@mh-valimbavaka/keyper" />
+  <img src="https://img.shields.io/npm/l/@mh-valimbavaka/keyper" />
+</p>
 
 A lightweight and secure CLI password manager built with Node.js.
 
@@ -7,7 +16,6 @@ Basically, the queried password is directly copied to the clipboard instead of b
 check the [usage](#usage) section for more information about queries.
 
 ## Features
-
 - Add, list, get, and delete password entries
 - Organize entries by group (e.g. GitHub, Gmail)
 - Generate secure random passwords
@@ -16,15 +24,20 @@ check the [usage](#usage) section for more information about queries.
 
 ## Installation
 
+**Via npm (recommended):**
 ```bash
-git clone https://github.com/your-username/keyper.git
+npm install -g @mh-valimbavaka/keyper
+```
+
+**Via source:**
+```bash
+git clone https://github.com/Vali127/keyper-cli-tool.git
 cd keyper-cli-tool
 npm install
 npm link
 ```
 
 ## Usage
-
 ```bash
 keyper            # opens interactive menu
 keyper add        # add a new entry
@@ -35,16 +48,10 @@ keyper generate   # generate a random password
 ```
 
 ## Security
-
 - 100% local
 - working with master password
 - AES-256-GCM encryption (for stored data).
 - using SHA-256 hash algorithm (For master password).
 
 ## Tech Stack
-
-Node.js, Commander, inquirer, Lowdb, Clipboardy, Picocolors, crypto (native)
-
-## License
-
-MIT
+Node.js, Commander, Inquirer, Lowdb, Clipboardy, Picocolors, crypto (native)
