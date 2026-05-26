@@ -5,7 +5,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/npm/v/@mh-valimbavaka/keyper" />
-  <img src="https://img.shields.io/npm/dm/@mh-valimbavaka/keyper" />
+  <img src="https://img.shields.io/github/last-commit/Vali127/keyper-cli-tool" />
   <img src="https://img.shields.io/npm/l/@mh-valimbavaka/keyper" />
 </p>
 
