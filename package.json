@@ -1,6 +1,6 @@
 {
   "name": "@mh-valimbavaka/keyper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Secure CLI password manager",
   "type": "module",
   "main": "src/index.js",
