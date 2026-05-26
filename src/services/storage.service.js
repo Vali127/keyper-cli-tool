@@ -1,5 +1,3 @@
-// src/services/storage.service.js
-
 import { join } from 'path';
 import { homedir } from 'os';
 import { mkdirSync } from 'fs';
